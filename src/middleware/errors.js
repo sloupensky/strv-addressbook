@@ -4,6 +4,12 @@ const config = require('../config')
 const appErrors = require('../utils/errors')
 const logger = require('../utils/logger')
 
+/**
+ * Wrapper for handling errors across the application
+ * @param ctx
+ * @param next
+ * @returns {Promise<*>}
+ */
 async function handleErrors(ctx, next) {
   try {
     return await next()

@@ -1,0 +1,13 @@
+version: '3.3'
+services:
+
+  postgresql:
+    image: sameersbn/postgresql:latest
+    container_name: postgresql
+    environment:
+      - DB_NAME=user-accounts-local, user-accounts-test
+      - PG_PASSWORD=passw0rd
+      - PG_TRUST_LOCALNET=true
+    ports:
+      - "5432:5432"
+

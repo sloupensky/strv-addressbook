@@ -1,0 +1,48 @@
+{
+  "name": "testproject",
+  "version": "1.0.0",
+  "description": "Test project for STRV",
+  "main": "app.js",
+  "scripts": {
+    "test": "NODE_ENV=test npx mocha --opts ./tests/mocha.opts ./tests",
+    "test:coverage": "NODE_ENV=test npx nyc mocha --opts ./tests/mocha.opts ./tests",
+    "dev": "nodemon src/app.js | pino-pretty",
+    "start": "node src/app.js",
+    "migrate:make": "NODE_ENV=local knex migrate:make --knexfile ./src/database/knexfile.js",
+    "db:migrate": "NODE_ENV=local knex migrate:latest --knexfile ./src/database/knexfile.js",
+    "db:rollback": "NODE_ENV=local knex migrate:rollback --knexfile ./src/database/knexfile.js",
+    "infra": "docker-compose up -d",
+    "infra:stop": "docker-compose down",
+    "lint": "eslint ."
+  },
+  "author": "Michal Sloupenský",
+  "license": "ISC",
+  "devDependencies": {
+    "firebase-server": "^1.0.1",
+    "supertest-koa-agent": "^0.3.0",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.9",
+    "pino-pretty": "^2.5.0",
+    "nyc": "^13.1.0",
+    "eslint": "^5.12.0"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.3",
+    "chai": "^4.2.0",
+    "dotenv": "^6.2.0",
+    "firebase": "^5.8.0",
+    "jsonschema": "^1.2.4",
+    "jsonwebtoken": "^8.4.0",
+    "kcors": "^2.2.2",
+    "knex": "^0.16.3",
+    "koa": "^2.6.2",
+    "koa-body": "^4.0.6",
+    "koa-compress": "^3.0.0",
+    "koa-router": "^7.4.0",
+    "objection": "^1.4.0",
+    "pg": "^7.8.0",
+    "pino": "^5.10.6",
+    "rambda": "^1.2.6",
+    "ramda": "^0.26.1"
+  }
+}

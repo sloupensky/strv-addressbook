@@ -1,0 +1,52 @@
+---
+sudo: required
+dist: trusty
+language: node_js
+node_js:
+  - 11.0.0
+
+branches:
+  only:
+    - master
+
+cache:
+  directories:
+    - node_modules
+
+services:
+  - docker
+
+env:
+  global:
+    - NODE_ENV=test
+
+install:
+  - npm install
+
+before_script:
+  - sudo service postgresql stop
+  - docker ps
+  - npm run infra
+  - sleep 5
+  - npm run db:migrate
+
+script:
+  - npm run test:coverage
+
+after_success:
+  - echo Upload code coverage 💪
+
+deploy:
+  - provider: heroku
+    skip_cleanup: true
+    api_key:
+      secure: "ZiZKitmUV++pFxFCtU4rWF6g3KlOrDyo7USWKXKfmz4Ba/XcBg80VKmHPOYvoxEiAmppYNYICke+f/WubsRHYon4JJeJJi+7QdXp9TBSj734p6X2Q6XEzEczIU3b/ZejL2wzei4HiBEIVSJdIFH89pme2z04W8VefeWyntHXprrL05FuTjovaxa+gGrz1NAOxakF7xJq0gv4qD9PfHLe/08zE6bYbTUqsXaaTFcBaTxIUP+yIhG98eJhTA1eIb2/gVCuq+zux2H7RiUxjR3MgD60ndBem3FocrfC1TZG8IP1fQ3xhCJGJDrcAH4VmaBfloqJn6zCfzXuqFVEqBoDBiOw0jvttMD1Bjp7lvwOeRddcQ3kR/e+dtEpQUiUwXGmO8Zo1A32WU29fOqE2+zfhPfgcP1DoElevntJ95rcpoJzFGP9ywDZ46jO4rzn9+L5uM9HiYhr37MBIXDXp29Voc/1zg+UHvSaDx7hSRQ7FlBt1BywznfNdFDkdRrtn9SozQg58188RZbcI3KGCMabcOAY2ax5BAStWQS4LBlmUM/aEdqe9EWszo8NsyYJzu3Pwq8M6m03Ac8RL/KLZQpUT3Frg7JWYd9DDZGPpfy70EzdtEcjy2ulpwT3F/9KDwo0pwWYfFvkUkoMA7vXRR6zXceK5v00LN9lZA5SxfT7yZM="
+    app: strv-addressbook-sloupensky
+    strategy: git
+    on:
+      branch:
+        - master
+      repo: sloupensky/strv-addressbook
+
+notifications:
+  email: false

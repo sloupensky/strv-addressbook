@@ -5,6 +5,11 @@ const errors = require('./../utils/errors')
 const logger = require('./../utils/logger')
 const crypto = require('./../utils/crypto')
 
+/**
+ * Login user and return access informations
+ * @param input
+ * @returns {Promise<{id: *, accessToken, email: *}>}
+ */
 async function login(input) {
     logger.info({input}, 'login start')
 
@@ -30,6 +35,12 @@ async function login(input) {
     }
 }
 
+/**
+ * Create user with specified input parameters
+ * - if user exists return conflict error
+ * @param input
+ * @returns {Promise<User>}
+ */
 async function signUp(input) {
     logger.info({input}, 'signUp start')
 
@@ -54,6 +65,11 @@ async function signUp(input) {
     return createdUser
 }
 
+/**
+ * Verify specified token payload and return user with login timeout
+ * @param input
+ * @returns {Promise<{loginTimeout: number, user: Promise<User>}>}
+ */
 async function verifyTokenPayload(input) {
     logger.info({input}, 'verifyTokenPayload')
     const jwtPayload = await crypto.verifyAccessToken(input.jwtToken)

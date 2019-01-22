@@ -32,6 +32,9 @@ async function handleErrors(ctx, next) {
   }
 }
 
+/**
+ * Handle not found error
+ */
 function handleNotFound() {
   throw new appErrors.NotFoundError()
 }

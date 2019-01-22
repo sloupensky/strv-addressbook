@@ -12,7 +12,7 @@ const operations = require('../operations/contacts')
 async function put(ctx) {
   validate(schema.contact,  ctx.request.body )
 
-  let docId = await operations.save(ctx.request.body)
+  let docId = await operations.create(ctx.request.body)
   const contact = await operations.getById(docId)
 
   ctx.status = 201
